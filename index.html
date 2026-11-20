@@ -1,22 +1,166 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta name="description" content="Wrath of the Lich King raid tactics, boss strategies and encounter guides.">
+    <title>Frostbound Tactics | WotLK Raid Guides</title>
+
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <top-bar></top-bar>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <h1>Welcome to My Website</h1>
-                <p>This is a simple HTML template with a top bar and a container for content.</p>
-            </div>
+
+    <!-- Background -->
+    <div class="background-overlay"></div>
+
+    <!-- Header -->
+    <header class="site-header">
+        <a href="index.html" class="logo">
+            <span class="logo-symbol">✦</span>
+            <span>FROSTBOUND <strong>TACTICS</strong></span>
+        </a>
+
+        <nav class="main-nav">
+            <a href="#home" class="active">Home</a>
+            <a href="#raids">Raids</a>
+            <a href="#about">About</a>
+        </nav>
+
+        <div class="header-version">
+            WRATH OF THE LICH KING
+            <span>3.3.5a</span>
         </div>
-    </div>
-    <footer>
-        <p>&copy; 2023 My Website</p>
+    </header>
+
+
+    <!-- Hero -->
+    <main>
+
+        <section class="hero" id="home">
+            <div class="hero-content">
+
+                <div class="eyebrow">
+                    <span></span>
+                    THE FROZEN THRONE AWAITS
+                    <span></span>
+                </div>
+
+                <h1>
+                    MASTER THE<br>
+                    <span>ENCOUNTER</span>
+                </h1>
+
+                <p class="hero-description">
+                    Prepare your raid. Learn every mechanic.
+                    Master every encounter.
+                    Your ultimate tactical archive for Wrath of the Lich King.
+                </p>
+
+                <a href="#raids" class="primary-button">
+                    EXPLORE RAID GUIDES
+                    <span>→</span>
+                </a>
+
+                <div class="hero-divider">
+                    <span></span>
+                    <span class="divider-symbol">❄</span>
+                    <span></span>
+                </div>
+
+            </div>
+
+            <div class="hero-bottom">
+                <span>AZEROTH'S GREATEST CHALLENGES</span>
+                <span>EST. 3.3.5a</span>
+            </div>
+        </section>
+
+
+        <!-- Raid Selection -->
+        <section class="raids-section" id="raids">
+
+            <div class="section-heading">
+                <div class="section-eyebrow">CHOOSE YOUR BATTLE</div>
+                <h2>RAID <span>ARCHIVES</span></h2>
+                <p>Select an instance to explore its encounters and tactics.</p>
+            </div>
+
+            <div class="raid-grid">
+
+                <!-- Icecrown Citadel -->
+                <a href="raids/icecrown-citadel/index.html" class="raid-card icc">
+                    <div class="raid-card-image"></div>
+                    <div class="raid-card-content">
+                        <div class="raid-number">01 / ICECROWN CITADEL</div>
+                        <h3>ICECROWN<br>CITADEL</h3>
+                        <p>The final assault against the Scourge and the Lich King.</p>
+                        <div class="raid-card-footer">
+                            <span>12 ENCOUNTERS</span>
+                            <span class="card-arrow">→</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Ruby Sanctum -->
+                <a href="raids/ruby-sanctum/index.html" class="raid-card ruby">
+                    <div class="raid-card-image"></div>
+                    <div class="raid-card-content">
+                        <div class="raid-number">02 / RUBY SANCTUM</div>
+                        <h3>RUBY<br>SANCTUM</h3>
+                        <p>Enter the hidden sanctuary beneath Wyrmrest Temple.</p>
+                        <div class="raid-card-footer">
+                            <span>1 ENCOUNTER</span>
+                            <span class="card-arrow">→</span>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Trial of the Crusader -->
+                <a href="raids/trial-of-the-crusader/index.html" class="raid-card toc">
+                    <div class="raid-card-image"></div>
+                    <div class="raid-card-content">
+                        <div class="raid-number">03 / ARGENT TOURNAMENT</div>
+                        <h3>TRIAL OF THE<br>CRUSADER</h3>
+                        <p>Face the champions and horrors of the Argent Tournament.</p>
+                        <div class="raid-card-footer">
+                            <span>5 ENCOUNTERS</span>
+                            <span class="card-arrow">→</span>
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+
+        <!-- About -->
+        <section class="about-section" id="about">
+            <div class="about-symbol">❄</div>
+            <div>
+                <div class="section-eyebrow">TACTICS • STRATEGY • PRECISION</div>
+                <h2>EVERY DETAIL <span>MATTERS</span></h2>
+                <p>
+                    A dedicated tactical reference for Wrath of the Lich King
+                    encounters. Built to help raid leaders organize their teams,
+                    understand mechanics and execute strategies.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-logo">FROSTBOUND TACTICS</div>
+        <p>Wrath of the Lich King · Version 3.3.5a</p>
+        <p class="copyright">An unofficial community project. Not affiliated with Blizzard Entertainment.</p>
     </footer>
 
 </body>
