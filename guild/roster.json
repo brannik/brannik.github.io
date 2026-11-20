@@ -1,14 +1,14 @@
 [
   {
     "characterName": "Agsett",
-    "guildRank": "Guild Master",
-    "publicNote": "Main character",
-    "officerNote": ""
+    "altOf": "",
+    "publicNote": "",
+    "guildRank": "Guild Master"
   },
   {
     "characterName": "Agsettalt",
-    "guildRank": "Raider",
-    "publicNote": "Example public note",
-    "officerNote": "Agsett"
+    "altOf": "Agsett",
+    "publicNote": "Примерна публична бележка",
+    "guildRank": "Raider"
   }
 ]

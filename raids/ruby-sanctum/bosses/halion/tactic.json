@@ -1,0 +1,29 @@
+{
+  "raid": "Рубиненото светилище",
+  "boss": "Халион",
+  "wing": "Рубиненото светилище",
+  "difficulty": {
+    "normal": {
+      "phases": [
+        {
+          "title": "Фаза 1",
+          "image": "",
+          "description": "",
+          "spells": [],
+          "notes": ""
+        }
+      ]
+    },
+    "heroic": {
+      "phases": [
+        {
+          "title": "Фаза 1",
+          "image": "",
+          "description": "",
+          "spells": [],
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

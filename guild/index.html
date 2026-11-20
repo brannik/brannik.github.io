@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bg">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Guild Roster | Frostbound Tactics</title>
+<title>Гилдийски състав | Icecrown Tactics by Agset</title>
 <link rel="stylesheet" href="../styles.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,58 +12,58 @@
 <body>
 <div class="background-overlay"></div>
 <header class="site-header">
-  <a href="../index.html" class="logo"><span class="logo-symbol">✦</span><span>FROSTBOUND <strong>TACTICS</strong></span></a>
-  <nav class="main-nav"><a href="../index.html">Home</a><a href="../index.html#raids">Raids</a><a href="../guild/index.html" class="active">Guild Roster</a><a href="../addons/index.html">Addons</a><a href="../weak-auras/index.html">WeakAuras</a></nav>
+  <a href="../index.html" class="logo"><span class="logo-symbol">✦</span><span>ICECROWN TACTICS <strong>TACTICS</strong></span></a>
+  <nav class="main-nav"><a href="../index.html">Начало</a><a href="../index.html#raids">Рейдове</a><a href="../guild/index.html" class="active">Състав</a><a href="../addons/index.html">Адони</a><a href="../weak-auras/index.html">WeakAuras</a></nav>
   <div class="header-version">WRATH OF THE LICH KING<span>WARMANE · ICECROWN</span></div>
 </header>
 <main class="guild-page">
   <div class="page-heading">
     <div class="section-eyebrow">UNITED UNDER ONE BANNER</div>
-    <h1>GUILD <span>ROSTER</span></h1>
-    <p>A compact guild member list with direct links to Warmane Icecrown Armory profiles.</p>
+    <h1>ГИЛДИЙСКИ <span>СЪСТАВ</span></h1>
+    <p>Един ред за всеки герой с директна връзка към Warmane Armory, алт връзка, публична бележка и гилдийски ранг.</p>
   </div>
   <div class="roster-tools">
-    <input id="search" type="search" placeholder="Search character, rank or public note…" aria-label="Search roster">
-    <label class="upload-label">LOAD JSON FILE<input id="jsonFile" type="file" accept=".json,application/json"></label>
-    <button id="downloadTemplate" type="button">DOWNLOAD JSON TEMPLATE</button>
+    <input id="search" type="search" placeholder="Търси герой, алт, бележка или ранг…" aria-label="Търси в гилдийския състав">
+    <label class="upload-label">ЗАРЕДИ JSON<input id="jsonFile" type="file" accept=".json,application/json"></label>
+    <button id="downloadTemplate" type="button">ИЗТЕГЛИ JSON ШАБЛОН</button>
   </div>
-  <p class="roster-note">Roster data loads from <code>roster.json</code>. Public notes are shown. Officer notes stay private and are only used to identify alts. Search checks all characters, not just the current page.</p>
-  <div class="roster-legend"><span class="alt-pill">ALT</span><span>Character is linked to a main through its officer note.</span></div>
-  <div id="roster" aria-live="polite"><div class="empty-state">Loading guild roster…</div></div>
-  <a class="back-link" href="../index.html">← BACK TO FROSTBOUND TACTICS</a>
+  <p class="roster-note">Съставът се зарежда от <code>roster.json</code>. Всеки герой е на отделен ред. Ако героят е алт, ще се покаже маркер и името на основния герой. Показва се само публичната бележка.</p>
+  <div class="roster-legend"><span class="alt-pill">АЛТ</span><span>Алт герой — показва се и към кой основен герой принадлежи.</span></div>
+  <div id="roster" aria-live="polite"><div class="empty-state">Зареждане на гилдийския състав…</div></div>
+  <a class="back-link" href="../index.html">← ОБРАТНО КЪМ ICECROWN TACTICS BY AGSET</a>
 </main>
-<footer class="site-footer"><div class="footer-logo">FROSTBOUND TACTICS</div><p>Warmane Icecrown · Wrath of the Lich King · Version 3.3.5a</p><p class="copyright">An unofficial community project. Not affiliated with Blizzard Entertainment.</p></footer>
+<footer class="site-footer"><div class="footer-logo">ICECROWN TACTICS BY AGSET</div><p>Warmane Icecrown · Wrath of the Lich King · Версия 3.3.5a</p><p class="copyright">An unofficial community project. Not affiliated with Blizzard Entertainment.</p></footer>
 <script>
 const rosterEl = document.getElementById('roster');
 const searchEl = document.getElementById('search');
 let members = [];
 let currentPage = 1;
-let pageSize = 25;
+let pageSize = 50;
 
 function normalize(data) {
-  if (!Array.isArray(data)) throw new Error('The JSON root must be an array of characters.');
+  if (!Array.isArray(data)) throw new Error('JSON трябва да съдържа масив от герои.');
   return data.map((x, i) => {
     if (!x || typeof x.characterName !== 'string' || typeof x.guildRank !== 'string')
-      throw new Error('Entry ' + (i + 1) + ' must contain characterName and guildRank strings.');
+      throw new Error('Запис ' + (i + 1) + ' трябва да съдържа characterName и guildRank като текст.');
+    // altOf е новото поле. officerNote се поддържа за съвместимост със стария JSON.
+    const altOf = typeof x.altOf === 'string' ? x.altOf.trim() : (typeof x.officerNote === 'string' ? x.officerNote.trim() : '');
     return {
       characterName: x.characterName.trim(),
-      guildRank: x.guildRank.trim(),
+      altOf: altOf.replace(/^(main|alt of|alt)\s*[:=-]\s*/i, '').trim(),
       publicNote: typeof x.publicNote === 'string' ? x.publicNote.trim() : '',
-      officerNote: typeof x.officerNote === 'string' ? x.officerNote.trim() : ''
+      guildRank: x.guildRank.trim()
     };
   }).filter(x => x.characterName && x.guildRank);
 }
 function esc(v) {
   return String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-function mainFromNote(note) {
-  if (!note) return '';
-  const candidate = note.trim().replace(/^(main|alt of|alt)\s*[:=-]\s*/i, '').trim();
-  return /^[A-Za-z][A-Za-z0-9_-]{1,23}$/.test(candidate) ? candidate : '';
+function armoryUrl(name) {
+  return 'https://armory.warmane.com/character/' + encodeURIComponent(name) + '/Icecrown';
 }
 function filteredMembers() {
   const q = searchEl.value.trim().toLowerCase();
-  return members.filter(m => (m.characterName + ' ' + m.guildRank + ' ' + m.publicNote).toLowerCase().includes(q))
+  return members.filter(m => (m.characterName + ' ' + m.altOf + ' ' + m.guildRank + ' ' + m.publicNote).toLowerCase().includes(q))
     .sort((a, b) => a.characterName.localeCompare(b.characterName));
 }
 function render() {
@@ -76,17 +76,18 @@ function render() {
 
   if (!total) {
     rosterEl.innerHTML = '<div class="empty-state">' +
-      (members.length ? 'No characters match your search.' : 'No roster loaded yet. Add characters to roster.json or load a JSON file.') +
+      (members.length ? 'Няма герои, които отговарят на търсенето.' : 'Няма зареден състав. Добави героите в roster.json или зареди JSON файл.') +
       '</div>';
     return;
   }
 
   const rows = visible.map(m => {
-    const main = mainFromNote(m.officerNote);
-    const alt = main ? ' <span class="alt-pill roster-alt">ALT</span><span class="roster-main">(' + esc(main) + ')</span>' : '';
-    const note = m.publicNote ? '<div class="roster-public-note">' + esc(m.publicNote) + '</div>' : '';
-    const href = 'https://armory.warmane.com/character/' + encodeURIComponent(m.characterName) + '/Icecrown';
-    return '<tr><td class="roster-character"><a href="' + href + '" target="_blank" rel="noopener noreferrer">' + esc(m.characterName) + '</a>' + alt + note + '</td><td class="roster-rank">' + esc(m.guildRank) + '</td></tr>';
+    const alt = m.altOf
+      ? '<span class="alt-pill roster-alt">АЛТ</span><a class="roster-main" href="' + esc(armoryUrl(m.altOf)) + '" target="_blank" rel="noopener noreferrer">' + esc(m.altOf) + '</a>'
+      : '<span class="roster-main-empty">—</span>';
+    const note = m.publicNote ? esc(m.publicNote) : '<span class="roster-main-empty">—</span>';
+    const href = armoryUrl(m.characterName);
+    return '<tr><td class="roster-character"><a href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">' + esc(m.characterName) + '</a></td><td class="roster-alt-cell">' + alt + '</td><td class="roster-public-cell">' + note + '</td><td class="roster-rank">' + esc(m.guildRank) + '</td></tr>';
   }).join('');
 
   const from = start + 1;
@@ -99,19 +100,19 @@ function render() {
   }
 
   rosterEl.innerHTML = `
-    <div class="roster-summary"><span><strong>${total}</strong> character${total === 1 ? '' : 's'}</span><span>Showing ${from}–${to}</span></div>
+    <div class="roster-summary"><span><strong>${total}</strong> ${total === 1 ? 'герой' : 'герои'}</span><span>Показани ${from}–${to}</span></div>
     <div class="roster-table-wrap"><table class="roster-table">
-      <thead><tr><th>CHARACTER</th><th>GUILD RANK</th></tr></thead>
+      <thead><tr><th>ГЕРОЙ</th><th>АЛТ / ОСНОВЕН ГЕРОЙ</th><th>ПУБЛИЧНА БЕЛЕЖКА ОТ ГИЛДИЯТА</th><th>ГИЛДИЙСКИ РАНГ</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>
     <div class="roster-pagination">
-      <label class="page-size-label">Per page
-        <select id="pageSize"><option value="25" ${pageSize===25?'selected':''}>25</option><option value="50" ${pageSize===50?'selected':''}>50</option><option value="100" ${pageSize===100?'selected':''}>100</option></select>
+      <label class="page-size-label">Редове на страница
+        <select id="pageSize"><option value="25" ${pageSize===25?'selected':''}>25</option><option value="50" ${pageSize===50?'selected':''}>50</option><option value="100" ${pageSize===100?'selected':''}>100</option><option value="250" ${pageSize===250?'selected':''}>250</option></select>
       </label>
       <div class="page-controls">
-        <button type="button" class="page-nav" data-page="${currentPage-1}" ${currentPage===1?'disabled':''}>PREVIOUS</button>
+        <button type="button" class="page-nav" data-page="${currentPage-1}" ${currentPage===1?'disabled':''}>НАЗАД</button>
         ${pageButtons.join('')}
-        <button type="button" class="page-nav" data-page="${currentPage+1}" ${currentPage===pages?'disabled':''}>NEXT</button>
+        <button type="button" class="page-nav" data-page="${currentPage+1}" ${currentPage===pages?'disabled':''}>НАПРЕД</button>
       </div>
     </div>`;
   rosterEl.querySelectorAll('[data-page]').forEach(button => button.addEventListener('click', () => {
@@ -127,7 +128,7 @@ function render() {
 async function loadDefault() {
   try {
     const response = await fetch('roster.json');
-    if (!response.ok) throw Error('Could not load roster.json');
+    if (!response.ok) throw Error('Не може да бъде зареден roster.json');
     members = normalize(await response.json());
     currentPage = 1;
     render();
@@ -145,18 +146,18 @@ document.getElementById('jsonFile').addEventListener('change', async e => {
     currentPage = 1;
     render();
   } catch (err) {
-    rosterEl.innerHTML = '<div class="empty-state">JSON error: ' + esc(err.message) + '</div>';
+    rosterEl.innerHTML = '<div class="empty-state">Грешка в JSON: ' + esc(err.message) + '</div>';
   }
 });
 document.getElementById('downloadTemplate').addEventListener('click', () => {
   const sample = [
-    {characterName:'Agsett',guildRank:'Guild Master',publicNote:'Main character',officerNote:''},
-    {characterName:'Agsettalt',guildRank:'Raider',publicNote:'Example public note',officerNote:'Agsett'}
+    {characterName:'Agsett',altOf:'',publicNote:'',guildRank:'Guild Master'},
+    {characterName:'Agsettalt',altOf:'Agsett',publicNote:'Примерна публична бележка',guildRank:'Raider'}
   ];
   const blob = new Blob([JSON.stringify(sample, null, 2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url; a.download = 'roster-template.json'; a.click();
+  a.href = url; a.download = 'guild-roster-template.json'; a.click();
   URL.revokeObjectURL(url);
 });
 loadDefault();

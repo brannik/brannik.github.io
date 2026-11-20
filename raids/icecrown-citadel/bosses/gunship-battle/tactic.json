@@ -1,0 +1,29 @@
+{
+  "raid": "Цитаделата на Ледената корона",
+  "boss": "Битка с въздушните кораби",
+  "wing": "Долният шпил",
+  "difficulty": {
+    "normal": {
+      "phases": [
+        {
+          "title": "Фаза 1",
+          "image": "",
+          "description": "",
+          "spells": [],
+          "notes": ""
+        }
+      ]
+    },
+    "heroic": {
+      "phases": [
+        {
+          "title": "Фаза 1",
+          "image": "",
+          "description": "",
+          "spells": [],
+          "notes": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "raid": "Изпитанието на Кръстоносеца",
+  "boss": "Шампиони на фракциите",
+  "wing": "Колизеумът",
+  "difficulty": {
+    "normal": {
+      "phases": [
+        {
+          "title": "Фаза 1",
+          "image": "",
+          "description": "",
+          "spells": [],
+          "notes": ""
+        }
+      ]
+    },
+    "heroic": {
+      "phases": [
+        {
+          "title": "Фаза 1",
+          "image": "",
+          "description": "",
+          "spells": [],
+          "notes": ""
+        }
+      ]
+    }
+  }
+}
