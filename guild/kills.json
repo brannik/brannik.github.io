@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "guildName": "Your Guild Name",
+  "updatedAt": "2026-11-20",
+  "instructions": "Set kills to your guild's kill count for each boss. Optional lastKill format: YYYY-MM-DD. Total and raid counters are calculated automatically.",
+  "raids": {
+    "icecrownCitadel": {
+      "name": "Icecrown Citadel",
+      "bosses": [
+        {
+          "name": "Lord Marrowgar",
+          "kills": 0,
+          "lastKill": ""
+        },
+        {
+          "name": "Lady Deathwhisper",
+          "kills": 0,
+          "lastKill": ""
+        },
+        {
+          "name": "Icecrown Gunship Battle",
+          "kills": 0,
+          "lastKill": ""
+        },
+        {
+          "name": "Deathbringer Saurfang",
+          "kills": 0,
+          "lastKill": ""
+        },
+        {
+          "name": "Festergut",
+          "kills": 0,
+          "lastKill": ""
+        },
+        {
+          "name": "Rotface",
+          "kills": 0,
+          "lastKill": ""
+        },
+        {
+          "name": "Professor Putricide",
+          "kills": 0,
+          "lastKill": ""
+        },
+        {
+          "name": "Blood Prince Council",
+          "kills": 0,
+          "lastKill": ""
+        },
+        {
+          "name": "Blood-Queen Lana'thel",
+          "kills": 0,
+          "lastKill": ""
+        },
+        {
+          "name": "Valithria Dreamwalker",
+          "kills": 0,
+          "lastKill": ""
+        },
+        {
+          "name": "Sindragosa",
+          "kills": 0,
+          "lastKill": ""
+        },
+        {
+          "name": "The Lich King",
+          "kills": 0,
+          "lastKill": ""
+        }
+      ]
+    },
+    "rubySanctum": {
+      "name": "Ruby Sanctum",
+      "bosses": [
+        {
+          "name": "Halion",
+          "kills": 0,
+          "lastKill": ""
+        }
+      ]
+    },
+    "trialOfTheCrusader": {
+      "name": "Trial of the Crusader",
+      "bosses": [
+        {
+          "name": "Northrend Beasts",
+          "kills": 0,
+          "lastKill": ""
+        },
+        {
+          "name": "Lord Jaraxxus",
+          "kills": 0,
+          "lastKill": ""
+        },
+        {
+          "name": "Faction Champions",
+          "kills": 0,
+          "lastKill": ""
+        },
+        {
+          "name": "Twin Val'kyr",
+          "kills": 0,
+          "lastKill": ""
+        },
+        {
+          "name": "Anub'arak",
+          "kills": 0,
+          "lastKill": ""
+        }
+      ]
+    }
+  }
+}

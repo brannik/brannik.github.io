@@ -1,0 +1,14 @@
+[
+  {
+    "characterName": "Agsett",
+    "guildRank": "Guild Master",
+    "publicNote": "Main character",
+    "officerNote": ""
+  },
+  {
+    "characterName": "Agsettalt",
+    "guildRank": "Raider",
+    "publicNote": "Example public note",
+    "officerNote": "Agsett"
+  }
+]

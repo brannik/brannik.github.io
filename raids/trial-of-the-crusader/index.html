@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Trial of the Crusader raid encounters and tactics for World of Warcraft Wrath of the Lich King 3.3.5a.">
+  <title>Trial of the Crusader | Frostbound Tactics</title>
+  <link rel="stylesheet" href="../../styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    .raid-hero { min-height: 390px; padding: 90px 7% 70px; display:flex; flex-direction:column; justify-content:center; text-align:center; position:relative; border-bottom:1px solid var(--border); background: radial-gradient(ellipse at 50% 20%, var(--raid-glow), transparent 65%), linear-gradient(180deg,rgba(8,13,22,.2),#080d16); }
+    .raid-hero h1 { font:500 clamp(36px,6vw,66px)/1.15 var(--heading-font); letter-spacing:2px; margin:18px 0; }
+    .raid-hero h1 span { color:var(--ice); }
+    .raid-hero p { max-width:680px; margin:0 auto; color:#a8b8c8; font-size:14px; line-height:1.9; }
+    .raid-meta { margin-top:25px; color:var(--ice); font-size:10px; letter-spacing:2px; }
+    .raid-content { max-width:1050px; margin:0 auto; padding:75px 7% 110px; }
+    .raid-content-head { display:flex; justify-content:space-between; align-items:end; gap:20px; margin-bottom:25px; }
+    .raid-content-head h2 { font:500 clamp(24px,3vw,34px) var(--heading-font); }
+    .raid-content-head p { color:var(--muted); font-size:12px; margin-top:9px; }
+    .encounter-list { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .encounter-card { display:flex; align-items:center; gap:18px; min-height:88px; padding:18px 20px; background:rgba(17,29,45,.78); border:1px solid var(--border); transition:.2s; }
+    .encounter-card:hover { background:var(--panel-hover); border-color:rgba(169,220,244,.55); transform:translateY(-2px); }
+    .encounter-number { color:var(--blue); font:500 20px var(--heading-font); min-width:30px; }
+    .encounter-info { display:flex; flex-direction:column; gap:7px; flex:1; }
+    .encounter-wing { color:var(--muted); font-size:9px; letter-spacing:1.7px; }
+    .encounter-info strong { color:var(--text); font:500 15px var(--heading-font); }
+    .encounter-arrow { color:var(--ice); font-size:20px; }
+    .back-link { display:inline-block; margin-top:35px; color:var(--ice); font-size:11px; letter-spacing:1.5px; }
+    .back-link:hover { color:white; }
+    @media(max-width:650px) { .encounter-list{grid-template-columns:1fr} .raid-content-head{align-items:start;flex-direction:column} .raid-hero{padding:70px 6% 55px} }
+  </style>
+</head>
+<body style="--raid-glow:#88734455">
+  <div class="background-overlay"></div>
+  <header class="site-header">
+    <a href="../../index.html" class="logo"><span class="logo-symbol">✦</span><span>FROSTBOUND <strong>TACTICS</strong></span></a>
+    <nav class="main-nav"><a href="../../index.html">Home</a><a href="../../index.html#raids">Raids</a><a href="../../guild/index.html">Guild Roster</a><a href="../../addons/index.html">Addons</a><a href="../../weak-auras/index.html">WeakAuras</a></nav>
+    <div class="header-version">WRATH OF THE LICH KING<span>3.3.5a</span></div>
+  </header>
+  <main>
+    <section class="raid-hero">
+      <div class="section-eyebrow">THE ARGENT TOURNAMENT · ICECROWN</div>
+      <h1>TRIAL OF THE CRUSADER</h1>
+      <p>Enter the Argent Coliseum and face a series of trials designed to test every member of your raid.</p>
+      <div class="raid-meta">5 ENCOUNTERS &nbsp;·&nbsp; WARMANE / WOTLK 3.3.5a</div>
+    </section>
+    <section class="raid-content">
+      <div class="raid-content-head"><div><div class="section-eyebrow">ENCOUNTER DIRECTORY</div><h2>CHOOSE YOUR <span style="color:var(--ice)">TARGET</span></h2><p>Select an encounter to open its dedicated tactics page.</p></div></div>
+      <div class="encounter-list">
+        <a class="encounter-card" href="bosses/northrend-beasts/index.html">
+          <span class="encounter-number">01</span>
+          <span class="encounter-info"><span class="encounter-wing">THE ARGENT COLISEUM</span><strong>Northrend Beasts</strong></span>
+          <span class="encounter-arrow">→</span>
+        </a>
+        <a class="encounter-card" href="bosses/lord-jaraxxus/index.html">
+          <span class="encounter-number">02</span>
+          <span class="encounter-info"><span class="encounter-wing">THE ARGENT COLISEUM</span><strong>Lord Jaraxxus</strong></span>
+          <span class="encounter-arrow">→</span>
+        </a>
+        <a class="encounter-card" href="bosses/faction-champions/index.html">
+          <span class="encounter-number">03</span>
+          <span class="encounter-info"><span class="encounter-wing">THE ARGENT COLISEUM</span><strong>Faction Champions</strong></span>
+          <span class="encounter-arrow">→</span>
+        </a>
+        <a class="encounter-card" href="bosses/twin-valkyr/index.html">
+          <span class="encounter-number">04</span>
+          <span class="encounter-info"><span class="encounter-wing">THE ARGENT COLISEUM</span><strong>Twin Val’kyr</strong></span>
+          <span class="encounter-arrow">→</span>
+        </a>
+        <a class="encounter-card" href="bosses/anubarak/index.html">
+          <span class="encounter-number">05</span>
+          <span class="encounter-info"><span class="encounter-wing">THE ARGENT COLISEUM</span><strong>Anub’arak</strong></span>
+          <span class="encounter-arrow">→</span>
+        </a>
+      </div>
+      <a class="back-link" href="../../index.html#raids">← BACK TO ALL RAIDS</a>
+    </section>
+  </main>
+  <footer class="site-footer"><div class="footer-logo">FROSTBOUND TACTICS</div><p>Wrath of the Lich King · Version 3.3.5a</p><p class="copyright">An unofficial community project. Not affiliated with Blizzard Entertainment.</p></footer>
+</body>
+</html>
