@@ -1,0 +1,112 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Guild roster and character directory.">
+    <title>Guild Roster | Frostbound Tactics</title>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="guild.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="background-overlay"></div>
+
+    <header class="site-header">
+        <a href="index.html" class="logo">
+            <span class="logo-symbol">✦</span>
+            <span>FROSTBOUND <strong>TACTICS</strong></span>
+        </a>
+
+        <nav class="main-nav">
+            <a href="index.html">Home</a>
+            <a href="index.html#raids">Raids</a>
+            <a href="guild.html" class="active">Guild Roster</a>
+        </nav>
+
+        <div class="header-version">
+            WRATH OF THE LICH KING
+            <span>3.3.5a · ICECROWN</span>
+        </div>
+    </header>
+
+    <main class="guild-main">
+
+        <section class="guild-hero">
+            <div class="section-eyebrow">THE GUILD DIRECTORY</div>
+            <h1>GUILD <span>ROSTER</span></h1>
+            <p>Our members. Our ranks. Our legacy.</p>
+            <div class="guild-divider">❄</div>
+        </section>
+
+        <section class="roster-section">
+
+            <div class="roster-heading">
+                <div>
+                    <div class="section-eyebrow">ICECROWN REALM</div>
+                    <h2>MEMBER <span>ARCHIVE</span></h2>
+                </div>
+
+                <div class="roster-count">
+                    <strong id="member-count">0</strong>
+                    <span>CHARACTERS</span>
+                </div>
+            </div>
+
+            <div class="roster-toolbar">
+                <input
+                    type="search"
+                    id="roster-search"
+                    placeholder="Search character..."
+                    aria-label="Search characters"
+                >
+
+                <select id="rank-filter" aria-label="Filter by guild rank">
+                    <option value="">All guild ranks</option>
+                </select>
+            </div>
+
+            <div class="roster-table-wrapper">
+                <table class="roster-table">
+                    <thead>
+                        <tr>
+                            <th class="number-column">#</th>
+                            <th>CHARACTER</th>
+                            <th>GUILD RANK</th>
+                            <th class="realm-column">REALM</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="roster-body">
+                        <tr>
+                            <td colspan="4" class="roster-message">
+                                Loading guild roster...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="roster-status" class="roster-status" aria-live="polite"></div>
+
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="footer-logo">FROSTBOUND TACTICS</div>
+        <p>Wrath of the Lich King · Version 3.3.5a</p>
+        <p class="copyright">
+            An unofficial community project. Not affiliated with Blizzard Entertainment.
+        </p>
+    </footer>
+
+    <script src="guild.js"></script>
+</body>
+</html>

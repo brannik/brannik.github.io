@@ -1,0 +1,238 @@
+
+/* =========================================
+   GUILD ROSTER
+========================================= */
+
+.guild-main {
+    min-height: 75vh;
+}
+
+.guild-hero {
+    padding: 85px 20px 65px;
+    text-align: center;
+
+    background:
+        radial-gradient(ellipse at center, rgba(55, 115, 155, 0.18), transparent 65%);
+}
+
+.guild-hero h1 {
+    font-family: var(--heading-font);
+    font-size: clamp(38px, 6vw, 65px);
+    font-weight: 500;
+    letter-spacing: 3px;
+}
+
+.guild-hero h1 span {
+    color: var(--ice);
+}
+
+.guild-hero p {
+    margin-top: 18px;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.guild-divider {
+    margin-top: 35px;
+    color: var(--ice);
+    font-size: 24px;
+}
+
+.roster-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 35px 25px 110px;
+}
+
+.roster-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.roster-heading h2 {
+    font-family: var(--heading-font);
+    font-size: 28px;
+    font-weight: 500;
+}
+
+.roster-heading h2 span {
+    color: var(--ice);
+}
+
+.roster-count {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+
+.roster-count strong {
+    font-family: var(--heading-font);
+    color: var(--ice);
+    font-size: 30px;
+}
+
+.roster-count span {
+    color: var(--muted);
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.roster-toolbar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.roster-toolbar input,
+.roster-toolbar select {
+    min-height: 48px;
+    padding: 0 16px;
+
+    background: #101a29;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+
+    color: var(--text);
+    font-family: var(--body-font);
+    font-size: 12px;
+    outline: none;
+}
+
+.roster-toolbar input {
+    flex: 1;
+}
+
+.roster-toolbar select {
+    min-width: 210px;
+    cursor: pointer;
+}
+
+.roster-toolbar input:focus,
+.roster-toolbar select:focus {
+    border-color: var(--blue);
+}
+
+.roster-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid var(--border);
+    background: rgba(13, 23, 37, 0.85);
+}
+
+.roster-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.roster-table th {
+    padding: 18px 22px;
+
+    background: rgba(36, 65, 91, 0.4);
+    border-bottom: 1px solid var(--border);
+
+    color: var(--ice);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.roster-table td {
+    padding: 17px 22px;
+    border-bottom: 1px solid rgba(155, 205, 235, 0.08);
+
+    color: #b9c8d7;
+    font-size: 12px;
+}
+
+.roster-table tbody tr {
+    transition: background 0.2s;
+}
+
+.roster-table tbody tr:hover {
+    background: rgba(75, 155, 197, 0.09);
+}
+
+.roster-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.number-column {
+    width: 65px;
+    color: #647b91 !important;
+}
+
+.realm-column {
+    width: 130px;
+    color: var(--muted) !important;
+}
+
+.character-link {
+    color: var(--ice-bright);
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.character-link:hover {
+    color: white;
+    text-decoration: underline;
+    text-decoration-color: var(--blue);
+    text-underline-offset: 4px;
+}
+
+.rank-badge {
+    display: inline-block;
+    padding: 6px 11px;
+
+    border: 1px solid rgba(169, 220, 244, 0.2);
+    background: rgba(75, 155, 197, 0.08);
+
+    color: #a9cce0;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+}
+
+.roster-message {
+    text-align: center;
+    padding: 45px !important;
+    color: var(--muted) !important;
+}
+
+.roster-status {
+    padding-top: 15px;
+    color: #60768b;
+    font-size: 10px;
+    text-align: right;
+}
+
+@media (max-width: 600px) {
+    .guild-hero {
+        padding: 65px 15px 45px;
+    }
+
+    .roster-section {
+        padding: 25px 15px 75px;
+    }
+
+    .roster-heading h2 {
+        font-size: 21px;
+    }
+
+    .roster-toolbar {
+        flex-direction: column;
+    }
+
+    .roster-toolbar select {
+        width: 100%;
+    }
+
+    .roster-table th,
+    .roster-table td {
+        padding: 14px 12px;
+    }
+
+    .realm-column {
+        display: none;
+    }
+}
