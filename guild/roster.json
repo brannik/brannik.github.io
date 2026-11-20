@@ -3,14 +3,35 @@
     "characterName": "Agsett",
     "altOf": "",
     "publicNote": "",
-    "guildRank": "Guild Master",
+    "guildRank": "Raider",
+    "class": "Paladin"
+  },
+  {
+    "characterName": "Agset",
+    "altOf": "Agsett",
+    "publicNote": "Примерна публична бележка",
+    "guildRank": "Alt",
+    "class": "Paladin"
+  },
+  {
+    "characterName": "Chucknoris",
+    "altOf": "Agsett",
+    "publicNote": "Примерна публична бележка",
+    "guildRank": "Alt",
     "class": "Death Knight"
   },
   {
-    "characterName": "Agsettalt",
+    "characterName": "Agsetw",
     "altOf": "Agsett",
     "publicNote": "Примерна публична бележка",
-    "guildRank": "Raider",
+    "guildRank": "Alt",
     "class": "Warrior"
+  },
+  {
+    "characterName": "Pewpewhot",
+    "altOf": "Agsett",
+    "publicNote": "Примерна публична бележка",
+    "guildRank": "Alt",
+    "class": "Druid"
   }
 ]
