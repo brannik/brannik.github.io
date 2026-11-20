@@ -3,12 +3,14 @@
     "characterName": "Agsett",
     "altOf": "",
     "publicNote": "",
-    "guildRank": "Guild Master"
+    "guildRank": "Guild Master",
+    "class": "Death Knight"
   },
   {
     "characterName": "Agsettalt",
     "altOf": "Agsett",
     "publicNote": "Примерна публична бележка",
-    "guildRank": "Raider"
+    "guildRank": "Raider",
+    "class": "Warrior"
   }
 ]

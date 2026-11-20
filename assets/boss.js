@@ -21,7 +21,7 @@
   $('#printBtn')?.addEventListener('click',()=>window.print());
   $('#discordBtn')?.addEventListener('click',()=>{
     const phases=data.difficulty?.[difficulty]?.phases||[];
-    const text=`**${data.boss} – ${difficulty==='normal'?'Normal':'Heroic'}**\n`+phases.map((p,i)=>`**${p.title||`Фаза ${i+1}`}**\n${p.description||''}\n`+(p.spells||[]).map(s=>`• ${s.name}: ${s.description}`).join('\n')).join('\n\n');
+    const text=`**${data.boss} – ${difficulty==='normal'?'Нормална':'Героична'}**\n`+phases.map((p,i)=>`**${p.title||`Фаза ${i+1}`}**\n${p.description||''}\n`+(p.spells||[]).map(s=>`• ${s.name}: ${s.description}`).join('\n')).join('\n\n');
     navigator.clipboard?.writeText(text).then(()=>alert('Текстът е копиран за Discord.')).catch(()=>alert('Копирането не е достъпно в този браузър.'));
   });
   render();

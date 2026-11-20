@@ -12,45 +12,46 @@
 <body>
 <div class="background-overlay"></div>
 <header class="site-header">
-  <a href="../index.html" class="logo"><span class="logo-symbol">✦</span><span>ICECROWN TACTICS <strong>TACTICS</strong></span></a>
+  <a href="../index.html" class="logo"><span class="logo-symbol">✦</span><span>ICECROWN TACTICS <strong>BY AGSET</strong></span></a>
   <nav class="main-nav"><a href="../index.html">Начало</a><a href="../index.html#raids">Рейдове</a><a href="../guild/index.html" class="active">Състав</a><a href="../addons/index.html">Адони</a><a href="../weak-auras/index.html">WeakAuras</a></nav>
   <div class="header-version">WRATH OF THE LICH KING<span>WARMANE · ICECROWN</span></div>
 </header>
 <main class="guild-page">
   <div class="page-heading">
-    <div class="section-eyebrow">UNITED UNDER ONE BANNER</div>
+    <div class="section-eyebrow">ОБЕДИНЕНИ ПОД ЕДНО ЗНАМЕ</div>
     <h1>ГИЛДИЙСКИ <span>СЪСТАВ</span></h1>
-    <p>Един ред за всеки герой с директна връзка към Warmane Armory, алт връзка, публична бележка и гилдийски ранг.</p>
+    <p>Основните герои са в основния списък. Натисни върху герой, за да разгънеш или скриеш неговите алтове.</p>
   </div>
   <div class="roster-tools">
     <input id="search" type="search" placeholder="Търси герой, алт, бележка или ранг…" aria-label="Търси в гилдийския състав">
     <label class="upload-label">ЗАРЕДИ JSON<input id="jsonFile" type="file" accept=".json,application/json"></label>
     <button id="downloadTemplate" type="button">ИЗТЕГЛИ JSON ШАБЛОН</button>
   </div>
-  <p class="roster-note">Съставът се зарежда от <code>roster.json</code>. Всеки герой е на отделен ред. Ако героят е алт, ще се покаже маркер и името на основния герой. Показва се само публичната бележка.</p>
-  <div class="roster-legend"><span class="alt-pill">АЛТ</span><span>Алт герой — показва се и към кой основен герой принадлежи.</span></div>
+  <p class="roster-note">Съставът се зарежда от <code>roster.json</code>. Алтовете се групират под основния герой и се показват при разгъване. Показва се само публичната бележка. Класът се задава в JSON чрез полето class.</p>
+  <div class="roster-legend"><span class="roster-expand-demo">⌄</span><span>Натисни основния герой, за да видиш алтовете му.</span><span class="alt-pill">АЛТ</span></div>
   <div id="roster" aria-live="polite"><div class="empty-state">Зареждане на гилдийския състав…</div></div>
   <a class="back-link" href="../index.html">← ОБРАТНО КЪМ ICECROWN TACTICS BY AGSET</a>
 </main>
-<footer class="site-footer"><div class="footer-logo">ICECROWN TACTICS BY AGSET</div><p>Warmane Icecrown · Wrath of the Lich King · Версия 3.3.5a</p><p class="copyright">An unofficial community project. Not affiliated with Blizzard Entertainment.</p></footer>
+<footer class="site-footer"><div class="footer-logo">ICECROWN TACTICS BY AGSET</div><p>Warmane Icecrown · Wrath of the Lich King · Версия 3.3.5a</p><p class="copyright">Неофициален фен проект. Не е свързан с Blizzard Entertainment.</p></footer>
 <script>
 const rosterEl = document.getElementById('roster');
 const searchEl = document.getElementById('search');
 let members = [];
 let currentPage = 1;
 let pageSize = 50;
+const expanded = new Set();
 
 function normalize(data) {
   if (!Array.isArray(data)) throw new Error('JSON трябва да съдържа масив от герои.');
   return data.map((x, i) => {
     if (!x || typeof x.characterName !== 'string' || typeof x.guildRank !== 'string')
       throw new Error('Запис ' + (i + 1) + ' трябва да съдържа characterName и guildRank като текст.');
-    // altOf е новото поле. officerNote се поддържа за съвместимост със стария JSON.
     const altOf = typeof x.altOf === 'string' ? x.altOf.trim() : (typeof x.officerNote === 'string' ? x.officerNote.trim() : '');
     return {
       characterName: x.characterName.trim(),
       altOf: altOf.replace(/^(main|alt of|alt)\s*[:=-]\s*/i, '').trim(),
       publicNote: typeof x.publicNote === 'string' ? x.publicNote.trim() : '',
+      className: typeof x.class === 'string' ? x.class.trim() : '',
       guildRank: x.guildRank.trim()
     };
   }).filter(x => x.characterName && x.guildRank);
@@ -58,72 +59,116 @@ function normalize(data) {
 function esc(v) {
   return String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
+const classInfo = {
+  'Death Knight': {slug:'death-knight', color:'#C41F3B', label:'Рицар на смъртта'},
+  'Druid': {slug:'druid', color:'#FF7D0A', label:'Друид'},
+  'Hunter': {slug:'hunter', color:'#ABD473', label:'Ловец'},
+  'Mage': {slug:'mage', color:'#69CCF0', label:'Маг'},
+  'Paladin': {slug:'paladin', color:'#F58CBA', label:'Паладин'},
+  'Priest': {slug:'priest', color:'#FFFFFF', label:'Свещеник'},
+  'Rogue': {slug:'rogue', color:'#FFF569', label:'Разбойник'},
+  'Shaman': {slug:'shaman', color:'#0070DE', label:'Шаман'},
+  'Warlock': {slug:'warlock', color:'#9482C9', label:'Чернокнижник'},
+  'Warrior': {slug:'warrior', color:'#C79C6E', label:'Воин'}
+};
+function classCell(member) {
+  const info = classInfo[member.className];
+  if (!info) return '<td class="roster-class"><span class="class-missing">—</span></td>';
+  const src = '../assets/classes/' + info.slug + '.png';
+  return '<td class="roster-class"><span class="class-mark" title="' + info.label + '"><img src="' + src + '" alt="' + info.label + '" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'inline-flex\';"><span class="class-fallback" style="display:none">' + info.label.slice(0,2).toUpperCase() + '</span></span><span class="class-name">' + info.label + '</span></td>';
+}
+function classStyle(member) {
+  const info = classInfo[member.className];
+  return info ? ' style="--class-color:' + info.color + '"' : '';
+}
 function armoryUrl(name) {
   return 'https://armory.warmane.com/character/' + encodeURIComponent(name) + '/Icecrown';
 }
-function filteredMembers() {
-  const q = searchEl.value.trim().toLowerCase();
-  return members.filter(m => (m.characterName + ' ' + m.altOf + ' ' + m.guildRank + ' ' + m.publicNote).toLowerCase().includes(q))
-    .sort((a, b) => a.characterName.localeCompare(b.characterName));
+function buildGroups() {
+  const mains = members.filter(m => !m.altOf).sort((a,b) => a.characterName.localeCompare(b.characterName));
+  const used = new Set();
+  const groups = mains.map(main => {
+    const alts = members.filter(m => m.altOf.toLowerCase() === main.characterName.toLowerCase())
+      .sort((a,b) => a.characterName.localeCompare(b.characterName));
+    alts.forEach(a => used.add(a.characterName.toLowerCase()));
+    used.add(main.characterName.toLowerCase());
+    return {main, alts};
+  });
+  // If an alt references a main character that is not in the imported roster,
+  // keep it visible as its own group instead of dropping the record.
+  members.filter(m => !used.has(m.characterName.toLowerCase())).forEach(m => groups.push({main:m, alts:[]}));
+  return groups.sort((a,b) => a.main.characterName.localeCompare(b.main.characterName));
+}
+function matches(m, q) {
+  return (m.characterName + ' ' + m.altOf + ' ' + m.className + ' ' + m.guildRank + ' ' + m.publicNote).toLowerCase().includes(q);
 }
 function render() {
-  const filtered = filteredMembers();
-  const total = filtered.length;
-  const pages = Math.max(1, Math.ceil(total / pageSize));
+  const q = searchEl.value.trim().toLowerCase();
+  const groups = buildGroups().map(g => {
+    const mainMatch = !q || matches(g.main, q);
+    const matchingAlts = q ? g.alts.filter(a => matches(a, q)) : g.alts;
+    return {...g, visibleAlts: mainMatch ? g.alts : matchingAlts, visible: mainMatch || matchingAlts.length > 0};
+  }).filter(g => g.visible);
+  const totalCharacters = groups.reduce((n,g) => n + 1 + g.visibleAlts.length, 0);
+  const pages = Math.max(1, Math.ceil(groups.length / pageSize));
   currentPage = Math.min(currentPage, pages);
   const start = (currentPage - 1) * pageSize;
-  const visible = filtered.slice(start, start + pageSize);
+  const visible = groups.slice(start, start + pageSize);
 
-  if (!total) {
+  if (!groups.length) {
     rosterEl.innerHTML = '<div class="empty-state">' +
       (members.length ? 'Няма герои, които отговарят на търсенето.' : 'Няма зареден състав. Добави героите в roster.json или зареди JSON файл.') +
       '</div>';
     return;
   }
 
-  const rows = visible.map(m => {
-    const alt = m.altOf
-      ? '<span class="alt-pill roster-alt">АЛТ</span><a class="roster-main" href="' + esc(armoryUrl(m.altOf)) + '" target="_blank" rel="noopener noreferrer">' + esc(m.altOf) + '</a>'
-      : '<span class="roster-main-empty">—</span>';
-    const note = m.publicNote ? esc(m.publicNote) : '<span class="roster-main-empty">—</span>';
-    const href = armoryUrl(m.characterName);
-    return '<tr><td class="roster-character"><a href="' + esc(href) + '" target="_blank" rel="noopener noreferrer">' + esc(m.characterName) + '</a></td><td class="roster-alt-cell">' + alt + '</td><td class="roster-public-cell">' + note + '</td><td class="roster-rank">' + esc(m.guildRank) + '</td></tr>';
+  const rows = visible.map(g => {
+    const main = g.main;
+    const hasAlts = g.alts.length > 0;
+    const isOpen = expanded.has(main.characterName.toLowerCase());
+    const toggle = hasAlts
+      ? '<button type="button" class="roster-toggle ' + (isOpen ? 'is-open' : '') + '" data-toggle="' + esc(main.characterName) + '" aria-expanded="' + isOpen + '" aria-label="' + (isOpen ? 'Скрий алтовете' : 'Покажи алтовете') + '"><span class="toggle-chevron">›</span><span class="alt-count">' + g.alts.length + '</span></button>'
+      : '<span class="roster-toggle-placeholder"></span>';
+    const mainNote = main.publicNote ? esc(main.publicNote) : '<span class="roster-main-empty">—</span>';
+    let html = '<tr class="roster-main-row"><td class="roster-character">' + toggle + '<a' + classStyle(main) + ' href="' + esc(armoryUrl(main.characterName)) + '" target="_blank" rel="noopener noreferrer">' + esc(main.characterName) + '</a><span class="main-pill">MAIN</span></td>' + classCell(main) + '<td class="roster-public-cell">' + mainNote + '</td><td class="roster-rank">' + esc(main.guildRank) + '</td></tr>'; 
+    if (hasAlts && isOpen) {
+      g.visibleAlts.forEach(alt => {
+        const note = alt.publicNote ? esc(alt.publicNote) : '<span class="roster-main-empty">—</span>';
+        html += '<tr class="roster-alt-row"><td class="roster-character"><span class="alt-tree">↳</span><span class="alt-pill">АЛТ</span><a' + classStyle(alt) + ' href="' + esc(armoryUrl(alt.characterName)) + '" target="_blank" rel="noopener noreferrer">' + esc(alt.characterName) + '</a><span class="alt-of-label">на ' + esc(main.characterName) + '</span></td>' + classCell(alt) + '<td class="roster-public-cell">' + note + '</td><td class="roster-rank">' + esc(alt.guildRank) + '</td></tr>'; 
+      });
+    }
+    return html;
   }).join('');
 
   const from = start + 1;
-  const to = Math.min(start + pageSize, total);
+  const to = Math.min(start + pageSize, groups.length);
   const pageButtons = [];
   const first = Math.max(1, currentPage - 2);
   const last = Math.min(pages, first + 4);
-  for (let p = first; p <= last; p++) {
-    pageButtons.push('<button type="button" class="page-number ' + (p === currentPage ? 'active' : '') + '" data-page="' + p + '" aria-current="' + (p === currentPage ? 'page' : 'false') + '">' + p + '</button>');
-  }
+  for (let p = first; p <= last; p++) pageButtons.push('<button type="button" class="page-number ' + (p === currentPage ? 'active' : '') + '" data-page="' + p + '" aria-current="' + (p === currentPage ? 'page' : 'false') + '">' + p + '</button>');
 
   rosterEl.innerHTML = `
-    <div class="roster-summary"><span><strong>${total}</strong> ${total === 1 ? 'герой' : 'герои'}</span><span>Показани ${from}–${to}</span></div>
+    <div class="roster-summary"><span><strong>${groups.length}</strong> основни героя · <strong>${totalCharacters}</strong> показвани персонажа</span><span>Групи ${from}–${to}</span></div>
     <div class="roster-table-wrap"><table class="roster-table">
-      <thead><tr><th>ГЕРОЙ</th><th>АЛТ / ОСНОВЕН ГЕРОЙ</th><th>ПУБЛИЧНА БЕЛЕЖКА ОТ ГИЛДИЯТА</th><th>ГИЛДИЙСКИ РАНГ</th></tr></thead>
+      <thead><tr><th>ГЕРОЙ / АЛТОВЕ</th><th>КЛАС</th><th>ПУБЛИЧНА БЕЛЕЖКА ОТ ГИЛДИЯТА</th><th>ГИЛДИЙСКИ РАНГ</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>
     <div class="roster-pagination">
-      <label class="page-size-label">Редове на страница
+      <label class="page-size-label">Основни герои на страница
         <select id="pageSize"><option value="25" ${pageSize===25?'selected':''}>25</option><option value="50" ${pageSize===50?'selected':''}>50</option><option value="100" ${pageSize===100?'selected':''}>100</option><option value="250" ${pageSize===250?'selected':''}>250</option></select>
       </label>
-      <div class="page-controls">
-        <button type="button" class="page-nav" data-page="${currentPage-1}" ${currentPage===1?'disabled':''}>НАЗАД</button>
-        ${pageButtons.join('')}
-        <button type="button" class="page-nav" data-page="${currentPage+1}" ${currentPage===pages?'disabled':''}>НАПРЕД</button>
-      </div>
+      <div class="page-controls"><button type="button" class="page-nav" data-page="${currentPage-1}" ${currentPage===1?'disabled':''}>НАЗАД</button>${pageButtons.join('')}<button type="button" class="page-nav" data-page="${currentPage+1}" ${currentPage===pages?'disabled':''}>НАПРЕД</button></div>
     </div>`;
+  rosterEl.querySelectorAll('[data-toggle]').forEach(button => button.addEventListener('click', () => {
+    const key = button.dataset.toggle.toLowerCase();
+    if (expanded.has(key)) expanded.delete(key); else expanded.add(key);
+    render();
+  }));
   rosterEl.querySelectorAll('[data-page]').forEach(button => button.addEventListener('click', () => {
     const next = Number(button.dataset.page);
     if (next >= 1 && next <= pages) { currentPage = next; render(); }
   }));
-  document.getElementById('pageSize').addEventListener('change', e => {
-    pageSize = Number(e.target.value);
-    currentPage = 1;
-    render();
-  });
+  document.getElementById('pageSize').addEventListener('change', e => { pageSize = Number(e.target.value); currentPage = 1; render(); });
 }
 async function loadDefault() {
   try {
@@ -132,33 +177,24 @@ async function loadDefault() {
     members = normalize(await response.json());
     currentPage = 1;
     render();
-  } catch (e) {
-    members = [];
-    render();
-  }
+  } catch (e) { members = []; render(); }
 }
 searchEl.addEventListener('input', () => { currentPage = 1; render(); });
 document.getElementById('jsonFile').addEventListener('change', async e => {
   const file = e.target.files[0];
   if (!file) return;
-  try {
-    members = normalize(JSON.parse(await file.text()));
-    currentPage = 1;
-    render();
-  } catch (err) {
-    rosterEl.innerHTML = '<div class="empty-state">Грешка в JSON: ' + esc(err.message) + '</div>';
-  }
+  try { members = normalize(JSON.parse(await file.text())); expanded.clear(); currentPage = 1; render(); }
+  catch (err) { rosterEl.innerHTML = '<div class="empty-state">Грешка в JSON: ' + esc(err.message) + '</div>'; }
 });
 document.getElementById('downloadTemplate').addEventListener('click', () => {
   const sample = [
-    {characterName:'Agsett',altOf:'',publicNote:'',guildRank:'Guild Master'},
-    {characterName:'Agsettalt',altOf:'Agsett',publicNote:'Примерна публична бележка',guildRank:'Raider'}
+    {characterName:'Agsett',altOf:'',class:'Death Knight',publicNote:'',guildRank:'Guild Master'},
+    {characterName:'Agsettalt',altOf:'Agsett',class:'Warrior',publicNote:'Примерна публична бележка',guildRank:'Raider'},
+    {characterName:'Agsettalt2',altOf:'Agsett',class:'Paladin',publicNote:'Втори алт',guildRank:'Raider'}
   ];
   const blob = new Blob([JSON.stringify(sample, null, 2)], {type:'application/json'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'guild-roster-template.json'; a.click();
-  URL.revokeObjectURL(url);
+  const url = URL.createObjectURL(blob); const a = document.createElement('a');
+  a.href = url; a.download = 'guild-roster-template.json'; a.click(); URL.revokeObjectURL(url);
 });
 loadDefault();
 </script>
