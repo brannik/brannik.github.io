@@ -20,3 +20,34 @@
 /* Guild kill counter */
 .kills-section{max-width:1120px;margin:0 auto;padding:85px 6% 95px}.kills-total-panel{max-width:520px;margin:0 auto 25px;padding:28px;text-align:center;background:linear-gradient(145deg,rgba(28,62,88,.88),rgba(10,20,33,.96));border:1px solid var(--border);box-shadow:0 15px 45px rgba(0,0,0,.2)}.kills-total-label{font-size:10px;letter-spacing:3px;color:var(--muted)}.kills-total-number{font:600 clamp(48px,8vw,76px) var(--heading-font);line-height:1.2;color:var(--ice);text-shadow:0 0 28px rgba(135,202,235,.2)}.kills-updated{font-size:10px;color:var(--muted);letter-spacing:1px;margin-top:8px}.kill-raid-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0 auto 40px}.kill-stat{padding:20px 15px;text-align:center;background:rgba(17,29,45,.78);border:1px solid var(--border)}.kill-stat span{display:block;color:var(--muted);font-size:9px;letter-spacing:1.4px;line-height:1.5}.kill-stat strong{display:block;color:#e2f3ff;font:500 29px var(--heading-font);margin-top:8px}.boss-kill-board{background:rgba(12,22,35,.72);border:1px solid var(--border);padding:24px}.boss-kill-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--border);padding-bottom:15px;margin-bottom:5px}.boss-kill-heading h3{font:500 18px var(--heading-font);letter-spacing:1.5px;color:var(--ice)}.boss-kill-heading>span{font-size:9px;letter-spacing:2px;color:var(--muted)}.boss-kill-row{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:13px 2px;border-bottom:1px solid rgba(120,160,190,.12)}.boss-kill-row:last-child{border-bottom:0}.boss-kill-row div{display:flex;flex-direction:column;gap:4px}.boss-kill-row strong{font-size:12px;color:#d9e8f3}.boss-kill-row span{font-size:10px;color:var(--muted)}.boss-kill-row>b{font:500 20px var(--heading-font);color:var(--ice)}.kills-empty,.kills-loading{font-size:12px;color:var(--muted);line-height:1.8;padding:12px 0}.kills-admin-hint{text-align:center;color:var(--muted);font-size:10px;margin-top:20px}.kills-admin-hint code,.kills-empty code{color:var(--ice)}
 @media(max-width:650px){.kills-section{padding:65px 5%}.kill-raid-stats{grid-template-columns:1fr}.boss-kill-board{padding:17px}.boss-kill-heading h3{font-size:15px}}
+
+
+/* Compact, paginated guild roster */
+.roster-summary{display:flex;justify-content:space-between;gap:12px;color:var(--muted);font-size:11px;margin:8px 0 12px}
+.roster-summary strong{color:var(--ice);font-size:14px}
+.roster-table-wrap{width:100%;overflow-x:auto;border:1px solid var(--border);background:rgba(10,20,33,.72)}
+.roster-table{width:100%;border-collapse:collapse;text-align:left}
+.roster-table th{padding:11px 15px;background:rgba(35,67,91,.42);color:var(--ice);font-size:9px;letter-spacing:1.4px;font-weight:700}
+.roster-table td{padding:9px 15px;border-top:1px solid rgba(130,164,190,.12);font-size:12px}
+.roster-table tbody tr:hover{background:rgba(72,119,151,.10)}
+.roster-table .roster-character{width:70%}
+.roster-table .roster-character>a{color:var(--text);font:500 13px var(--heading-font);text-decoration:none}
+.roster-table .roster-character>a:hover{color:var(--ice)}
+.roster-table .roster-rank{color:var(--muted);white-space:nowrap;font-size:11px}
+.roster-alt{margin-left:9px;padding:2px 5px;font-size:8px;vertical-align:1px}
+.roster-main{margin-left:5px;color:var(--ice);font-size:10px}
+.roster-public-note{margin-top:3px;color:#8199ad;font-size:10px;line-height:1.35;overflow-wrap:anywhere}
+.roster-pagination{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+.page-size-label{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:10px}
+.page-size-label select{background:#0c1725;border:1px solid var(--border);color:var(--text);padding:6px 9px;font:11px var(--body-font)}
+.page-controls{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.page-controls button{background:#102238;border:1px solid var(--border);color:var(--muted);padding:7px 10px;font:600 9px var(--body-font);cursor:pointer}
+.page-controls button:hover:not(:disabled),.page-controls button.active{background:#1d486c;color:white;border-color:rgba(180,225,250,.45)}
+.page-controls button:disabled{opacity:.35;cursor:not-allowed}
+@media(max-width:650px){
+ .roster-pagination{align-items:flex-start;flex-direction:column}
+ .page-controls{width:100%}
+ .page-controls button{padding:8px 9px}
+ .roster-table th,.roster-table td{padding:9px 10px}
+ .roster-table .roster-character{width:auto}
+}
