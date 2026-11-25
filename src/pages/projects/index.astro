@@ -1,0 +1,16 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+import ProjectCatalogue from "../../components/ProjectCatalogue.astro";
+import { getCollection } from "astro:content";
+const projects = (await getCollection("projects")).sort((a, b) => a.data.order - b.data.order);
+---
+<MainLayout title="Projects" description="Browse the complete project catalogue.">
+  <section class="container page-heading">
+    <p class="eyebrow">The catalogue</p>
+    <h1>Projects</h1>
+    <p>Software, hardware, experiments and things worth exploring.</p>
+  </section>
+  <section class="container section" style="padding-top:10px">
+    <ProjectCatalogue projects={projects} />
+  </section>
+</MainLayout>

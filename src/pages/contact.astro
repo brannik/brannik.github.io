@@ -1,0 +1,21 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { siteConfig } from "../config/site";
+---
+<MainLayout title="Contact" description="Contact information and links.">
+  <section class="container page-heading">
+    <p class="eyebrow">Say hello</p>
+    <h1>Contact</h1>
+    <p>Questions, collaborations, feedback or just a conversation.</p>
+  </section>
+  <section class="container section" style="padding-top:10px">
+    <div class="content-panel">
+      <h2 style="margin-top:0">Get in touch</h2>
+      <p class="lead">The contact details below are placeholders. Update them in <code>src/config/site.ts</code>.</p>
+      <div class="button-row">
+        <a class="button button-primary" href={`mailto:${siteConfig.email}`}>Email me ↗</a>
+        <a class="button" href={siteConfig.githubUrl} target="_blank" rel="noreferrer">GitHub ↗</a>
+      </div>
+    </div>
+  </section>
+</MainLayout>

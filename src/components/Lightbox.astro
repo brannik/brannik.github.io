@@ -1,0 +1,37 @@
+<dialog class="lightbox" data-lightbox aria-label="Screenshot viewer">
+  <button class="lightbox-close" type="button" data-close aria-label="Close image viewer">Close ✕</button>
+  <button class="lightbox-prev" type="button" data-prev aria-label="Previous image">←</button>
+  <img src="" alt="" data-lightbox-image />
+  <button class="lightbox-next" type="button" data-next aria-label="Next image">→</button>
+  <p class="lightbox-caption" data-lightbox-caption></p>
+</dialog>
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>("[data-lightbox]");
+  const image = dialog?.querySelector<HTMLImageElement>("[data-lightbox-image]");
+  const caption = dialog?.querySelector<HTMLElement>("[data-lightbox-caption]");
+  const items = [...document.querySelectorAll<HTMLButtonElement>("[data-gallery-item]")];
+  let current = 0;
+  const show = (index: number) => {
+    if (!items.length || !image) return;
+    current = (index + items.length) % items.length;
+    const source = items[current].querySelector("img");
+    if (!source) return;
+    image.src = source.src;
+    image.alt = source.alt;
+    if (caption) caption.textContent = items[current].dataset.caption ?? "";
+  };
+  items.forEach((item, index) => item.addEventListener("click", () => {
+    show(index);
+    dialog?.showModal();
+  }));
+  dialog?.querySelector("[data-close]")?.addEventListener("click", () => dialog.close());
+  dialog?.querySelector("[data-prev]")?.addEventListener("click", () => show(current - 1));
+  dialog?.querySelector("[data-next]")?.addEventListener("click", () => show(current + 1));
+  dialog?.addEventListener("click", (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog?.addEventListener("keydown", (event) => {
+    if (event.key === "ArrowLeft") show(current - 1);
+    if (event.key === "ArrowRight") show(current + 1);
+  });
+</script>

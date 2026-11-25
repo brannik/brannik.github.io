@@ -1,0 +1,26 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { siteConfig } from "../config/site";
+---
+<MainLayout title="About" description="About this portfolio and the person behind the projects.">
+  <section class="container page-heading">
+    <p class="eyebrow">A little context</p>
+    <h1>About</h1>
+    <p>The person, interests and ideas behind this collection.</p>
+  </section>
+  <section class="container section" style="padding-top:10px">
+    <div class="content-panel prose">
+      <h2>Curiosity, learning and building.</h2>
+      <p>This page is intentionally a starter. Replace this text with a short introduction: what you enjoy building, the problems you like solving, and what visitors should know about your work.</p>
+      <h2>Areas of interest</h2>
+      <p>Add your interests, skills or technologies here. You can use headings, paragraphs, lists and links.</p>
+      <ul>
+        <li>Software and web development</li>
+        <li>Hardware and embedded projects</li>
+        <li>Automation and practical tools</li>
+      </ul>
+      <p>Update this page in <code>src/pages/about.astro</code>.</p>
+      <p><a href={siteConfig.githubUrl} target="_blank" rel="noreferrer">Find me on GitHub ↗</a></p>
+    </div>
+  </section>
+</MainLayout>

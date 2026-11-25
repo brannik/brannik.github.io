@@ -1,0 +1,44 @@
+---
+import ProjectCard from "./ProjectCard.astro";
+const { projects } = Astro.props;
+const categories = [...new Set(projects.map((project) => project.data.category))].sort();
+---
+<div class="toolbar" data-catalogue>
+  <input class="search-input" type="search" placeholder="Search projects, descriptions or technologies…" aria-label="Search projects" data-search-input />
+  <div class="filter-list" aria-label="Filter projects by category">
+    <button class="filter-button" type="button" data-filter="all" aria-pressed="true">All</button>
+    {categories.map((category) => <button class="filter-button" type="button" data-filter={category} aria-pressed="false">{category}</button>)}
+  </div>
+</div>
+<div class="project-grid" data-project-grid>
+  {projects.map((project) => <ProjectCard project={project} />)}
+</div>
+<p class="empty-state" data-empty-state>No projects match your search.</p>
+<script>
+  const catalogue = document.querySelector<HTMLElement>("[data-catalogue]");
+  if (catalogue) {
+    const search = catalogue.querySelector<HTMLInputElement>("[data-search-input]");
+    const buttons = [...catalogue.querySelectorAll<HTMLButtonElement>("[data-filter]")];
+    const cards = [...document.querySelectorAll<HTMLElement>("[data-project-card]")];
+    const empty = document.querySelector<HTMLElement>("[data-empty-state]");
+    let activeCategory = "all";
+    const update = () => {
+      const query = (search?.value ?? "").trim().toLowerCase();
+      let visible = 0;
+      cards.forEach((card) => {
+        const matchesCategory = activeCategory === "all" || card.dataset.category === activeCategory;
+        const matchesQuery = (card.dataset.search ?? "").includes(query);
+        const show = matchesCategory && matchesQuery;
+        card.hidden = !show;
+        if (show) visible++;
+      });
+      if (empty) empty.style.display = visible ? "none" : "block";
+    };
+    search?.addEventListener("input", update);
+    buttons.forEach((button) => button.addEventListener("click", () => {
+      activeCategory = button.dataset.filter ?? "all";
+      buttons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+      update();
+    }));
+  }
+</script>
