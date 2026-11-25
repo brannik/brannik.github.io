@@ -1,5 +1,11 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import ProjectCard from "./ProjectCard.astro";
+
+interface Props {
+  projects: CollectionEntry<"projects">[];
+}
+
 const { projects } = Astro.props;
 const categories = [...new Set(projects.map((project) => project.data.category))].sort();
 ---
